@@ -1,0 +1,104 @@
+﻿@model App.Models.Flavor
+@using App.Models;
+@{
+    var favourite = (List<App.Models.Favourite>)ViewBag.favourite;
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="breadcrumb-section">
+    <h2 class="sr-only">Site Breadcrumb</h2>
+    <div class="container">
+        <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Flavors")">Flavors</a></li>
+                    <li class="breadcrumb-item active">@Model.Name</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<main class="inner-page-sec-padding-bottom">
+    <div class="container">
+        <div class="row  mb--60">
+            <div class="col-lg-5 mb--30">
+                <!-- Product Details Slider Big Image-->
+                <div class="product-details-slider sb-slick-slider arrow-type-two">
+                    <div class="single-slide">
+                        <img src="@Model.DecodedImages()[0]" alt="">
+                    </div>
+                </div>
+                <!-- Product Details Slider Nav -->
+            </div>
+            <div class="col-lg-7">
+                <div class="product-details-info pl-lg--30 " style="margin-top: 9px;">
+                    <h3 style="word-wrap: break-word" class="product-title">@Model.Name</h3>
+                    <ul class="list-unstyled">
+                        <li>Preparation time: <span class="list-value">@Model.PreparationTime minutes</span></li>
+                        <li>Total time: <span class="list-value">@Model.TotalTime minutes</span></li>
+                        <li>Ingredients: <span class="list-value">@Model.Ingredients</span></li>
+                    </ul>
+                    <div class="compare-wishlist-row">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (favourite != null)
+                            {
+                                if ((favourite.Where(x => x.ItemId == Model.Id)).FirstOrDefault() != null)
+                                {
+                                    <a href="javascript:void(0)" class="add-link addFavourite favourite_added" data-item-type="@Favourite.FLAVORS" data-id="@Model.Id"><i class="fas fa-heart"></i> Favourite</a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" class="add-link addFavourite" data-item-type="@Favourite.FLAVORS" data-id="@Model.Id">
+                                        <i class="fas fa-heart"></i> Favourite
+                                    </a>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sb-custom-tab review-tab section-padding">
+            <ul class="nav nav-tabs nav-style-2" id="myTab2" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="tab1" data-toggle="tab" href="#tab-1" role="tab"
+                       aria-controls="tab-1" aria-selected="true">
+                        DESCRIPTION
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content space-db--20" id="myTabContent">
+                <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="tab1">
+                    <article class="review-article">
+                        <h1 class="sr-only">Tab Article</h1>
+                        <p style="text-align: center; word-wrap: break-word">
+                            @Model.Description
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="tab-product-details">
+          <div class="brand">
+            <img src="~/Content/Client/img/others/review-tab-product-details.jpg" alt="">
+          </div>
+          <h5 class="meta">Reference <span class="small-text">demo_5</span></h5>
+          <h5 class="meta">In stock <span class="small-text">297 Items</span></h5>
+          <section class="product-features">
+            <h3 class="title">Data sheet</h3>
+            <dl class="data-sheet">
+              <dt class="name">Compositions</dt>
+              <dd class="value">Viscose</dd>
+              <dt class="name">Styles</dt>
+              <dd class="value">Casual</dd>
+              <dt class="name">Properties</dt>
+              <dd class="value">Maxi Dress</dd>
+            </dl>
+          </section>
+        </div> -->
+    </div>
+</main>

@@ -1,0 +1,66 @@
+﻿@model PagedList.IPagedList<App.Models.InputDetail>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Input Details</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <form class="col-md-2 col-sm-12  form-group pull-right" action="/Admin/Inputs/Index">
+                    <button id="btnCreate" class="btn btn-success">Back</button>
+                </form>
+                @*<div class="col-md-3 col-sm-5 col-xs-12 form-group pull-right">
+                        <div class="input-group">
+                            <input type="text" name="searchKey" class="form-control" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" id="btnSearch" type="submit">Go!</button>
+                            </span>
+                        </div>
+                    </div>*@
+                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Quantity</th>
+                                        <th>Price</th>
+                                        <th>CreateAt</th>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int count = 1;
+                                    }
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr role="row" class="odd">
+                                            <td>@(count++)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Book.Name)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.OnlyShowFivePagesAtATime)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+

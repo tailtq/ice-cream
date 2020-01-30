@@ -1,0 +1,111 @@
+﻿@model PagedList.IPagedList<App.Models.Book>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Latest compiled and minified CSS -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Books</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="mb-4 search-container">
+                    <div class="float-left">
+                        <a href="@Url.Action("Create")" class="btn btn-success">Create</a>
+                    </div>
+                    <div class="float-right">
+                        @using (Html.BeginForm("Index", "Books", FormMethod.Get, new { @class = "form-inline search-bar" }))
+                        {
+                            @Html.DropDownList("searchCategory", ViewBag.CategoryId as SelectList, "Choose Category", new { @class = "form-control" })
+                            <div class="input-group">
+                                <input type="text" name="search" value="@ViewBag.search" class="form-control" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="submit">Search</button>
+                                </span>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                
+                <div class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="example2" class="table table-bordered table-hover dataTable" data-module="Books">
+                                <thead>
+                                    <tr role="row">
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>CategoryName</th>
+                                        <th>Code</th>
+                                        <th>Image</th>
+                                        <th>Price</th>
+                                        <th>Discount</th>
+                                        <th>CreateDate</th>
+                                        <th width="10%">Action</th>
+                                </thead>
+                                <tbody>
+                                    @{int count = 1;}
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr role="row" class="odd" data-id="@item.Id">
+                                            <td>@(count++)</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.BookCategory.Name</td>
+                                            <td>@item.Sku</td>
+                                            <td><img src="@item.DecodedImages()[0]" width="20%" /></td>
+                                            <td>@item.Price</td>
+                                            <td>@item.Discount</td>
+                                            <td>@item.CreatedAt.ToShortDateString()</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a href="/Admin/Books/Edit/@item.Id"
+                                                       class="btn btn-xs btn-info btn-edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <button class="btn btn-xs btn-danger element__delete">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                            <div class="float-right">
+                                @Html.PagedListPager(
+                                    Model,
+                                    page => Url.Action("Index", new { page, search = ViewBag.search, searchCategory = ViewBag.searchCat }),
+                                    new PagedListRenderOptions()
+                                    {
+                                        FunctionToTransformEachPageLink = (liTag, aTag) =>
+                                        {
+                                            aTag.Attributes.Add("class", "page-link");
+                                            liTag.InnerHtml = aTag.ToString();
+                                            return liTag;
+                                        },
+                                        LiElementClasses = new string[] { "page-item" },
+                                        DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                        DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                        MaximumPageNumbersToDisplay = 5
+                                    }
+                                )
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.col -->

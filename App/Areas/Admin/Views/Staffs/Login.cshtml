@@ -1,0 +1,53 @@
+﻿@model App.ViewModels.Admin.Staff.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "../Shared/_AuthenticationLayout.cshtml";
+}
+<div class="login-box">
+    <div class="login-logo">
+        <b>Ice Cream</b>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">Sign in to start your session</p>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="input-group mb-3">
+                    @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Email" } })
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                <div class="input-group mb-3">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password" })
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                <p class="text-danger">@ViewBag.LoginStatus</p>
+                <div class="input-group mb-3">
+                    <!-- /.col -->
+                    <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                    <!-- /.col -->
+                </div>
+            }
+            <!-- /.social-auth-links -->
+
+            <p class="mb-0 mt-4 text-center">
+                <a href="#">I forgot my password</a>
+            </p>
+        </div>
+        <!-- /.login-card-body -->
+    </div>
+</div>
+

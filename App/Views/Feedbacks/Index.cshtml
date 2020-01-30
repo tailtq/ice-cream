@@ -1,0 +1,115 @@
+﻿@using CaptchaMvc.HtmlHelpers;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="breadcrumb-section">
+    <h2 class="sr-only">Site Breadcrumb</h2>
+    <div class="container">
+        <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Feedback</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<main class="contact_area inner-page-sec-padding-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="gogle_map">
+                    <div id="googleMap" style="position: relative; overflow: hidden;">
+                        <div style="height: 100%; width: 100%; position: absolute; top: 0px; left: 0px; background-color: rgb(229, 227, 223);">
+                            <img src="~/Content/Images/map.PNG" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt--60 ">
+            <div class="col-lg-5 col-md-5 col-12">
+                <div class="contact_adress">
+                    <div class="ct_address">
+                        <h3 class="ct_title">Location &amp; Details</h3>
+                    </div>
+                    <div class="address_wrapper">
+                        <div class="address">
+                            <div class="icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-info-text">
+                                <p><span>Address:</span> 38 Yen Bai, Hai Chau 1, Q. Hai Chau, Đa Nang</p>
+                            </div>
+                        </div>
+                        <div class="address">
+                            <div class="icon">
+                                <i class="far fa-envelope"></i>
+                            </div>
+                            <div class="contact-info-text">
+                                <p><span>Email: </span> support@example.com </p>
+                            </div>
+                        </div>
+                        <div class="address">
+                            <div class="icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="contact-info-text">
+                                <p><span>Phone:</span> 0236 3779 779 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-7 col-12 mt--30 mt-md--0">
+                <div class="contact_form">
+                    <h3 class="ct_title">Feedback</h3>
+                    <form id="contact-form " action="/Feedbacks/Create" method="post" class="contact-form">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Your Name <span class="required">*</span></label>
+                                    <input type="text" id="con_name" name="Name" class="form-control" required="">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Your Email <span class="required">*</span></label>
+                                    <input type="email" id="con_email" name="Email" class="form-control" required="">
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Your Message</label>
+                                    <textarea id="con_message" name="Message" class="form-control" required=""></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    @Html.MathCaptcha()
+                                    <br />
+                                    @ViewBag.captchaError
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-btn">
+                                    <button type="submit" value="submit" id="submit" class="btn btn--primary" name="submit">send</button>
+                                </div>
+                                <div class="form__output"></div>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="form-output">
+                        <p class="form-messege"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

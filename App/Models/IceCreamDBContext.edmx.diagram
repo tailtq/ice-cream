@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="692578319ccc40b6a9044d8ae28634d1" Name="Diagram1" ZoomLevel="111">
+        <EntityTypeShape EntityType="IceCreamModel.BookCategory" Width="1.5" PointX="5.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.Book" Width="1.5" PointX="10.5" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.Customer" Width="1.5" PointX="5.25" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.Favourite" Width="1.5" PointX="7.5" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.Feedback" Width="1.5" PointX="5.25" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.Flavor" Width="1.5" PointX="5.25" PointY="27.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.InputDetail" Width="1.5" PointX="12.75" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.InputQuantity" Width="1.5" PointX="15" PointY="26.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.Input" Width="1.5" PointX="7.5" PointY="32" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.Level" Width="1.5" PointX="0.75" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.Media" Width="1.5" PointX="5.25" PointY="36.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.MembershipRegistration" Width="1.5" PointX="7.5" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.OrderDetail" Width="1.5" PointX="12.75" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.Order" Width="1.5" PointX="7.5" PointY="23.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.Payout" Width="1.5" PointX="10.5" PointY="25.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.Permission" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.Staff" Width="1.5" PointX="3" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IceCreamModel.Supplier" Width="1.5" PointX="5.25" PointY="39.625" IsExpanded="true" />
+        <AssociationConnector Association="IceCreamModel.FK__BookCateg__Delet__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Books__CategoryI__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Books__DeletedBy__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Books__StaffId__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__InputDeta__BookI__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__OrderDeta__BookI__628FA481" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Customers__Delet__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Favourite__Custo__75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Membershi__Custo__33D4B598" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Orders__Customer__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Payouts__Custome__70DDC3D8" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Feedbacks__Delet__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Feedbacks__Staff__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Flavors__Deleted__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Payouts__FlavorI__6FE99F9F" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__InputDeta__Input__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__InputQuan__Impor__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Inputs__StaffId__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Inputs__Supplier__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Staffs__LevelId__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Medias__DeletedB__797309D9" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Medias__StaffId__787EE5A0" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__OrderDeta__Order__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Orders__StaffId__5AEE82B9" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Payouts__StaffId__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__Suppliers__Delet__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.LevelPermission" ManuallyRouted="false" />
+        <AssociationConnector Association="IceCreamModel.FK__InputQuan__Impor__5535A9631" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

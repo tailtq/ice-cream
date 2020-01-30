@@ -1,0 +1,732 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="IceCreamModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BookCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Slug" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <NavigationProperty Name="Staff" Relationship="Self.FK__BookCateg__Delet__3C69FB99" FromRole="BookCategories" ToRole="Staffs" />
+    <NavigationProperty Name="Books" Relationship="Self.FK__Books__CategoryI__3F466844" FromRole="BookCategories" ToRole="Books" />
+  </EntityType>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CategoryId" Type="Int32" Nullable="false" />
+    <Property Name="StaffId" Type="Int32" Nullable="false" />
+    <Property Name="Sku" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Slug" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Images" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="Discount" Type="Double" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <NavigationProperty Name="BookCategory" Relationship="Self.FK__Books__CategoryI__3F466844" FromRole="Books" ToRole="BookCategories" />
+    <NavigationProperty Name="Staff" Relationship="Self.FK__Books__DeletedBy__44FF419A" FromRole="Books" ToRole="Staffs" />
+    <NavigationProperty Name="Staff1" Relationship="Self.FK__Books__StaffId__403A8C7D" FromRole="Books" ToRole="Staffs" />
+    <NavigationProperty Name="InputDetails" Relationship="Self.FK__InputDeta__BookI__5070F446" FromRole="Books" ToRole="InputDetails" />
+    <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__BookI__5EBF139D" FromRole="Books" ToRole="OrderDetails" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Avatar" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreditCard" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="MembershipStatus" Type="Byte" Nullable="false" />
+    <Property Name="ResetPasswordToken" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="TokenExipredAt" Type="DateTime" Precision="3" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <NavigationProperty Name="Staff" Relationship="Self.FK__Customers__Delet__30F848ED" FromRole="Customers" ToRole="Staffs" />
+    <NavigationProperty Name="Favourites" Relationship="Self.FK__Favourite__Custo__71D1E811" FromRole="Customers" ToRole="Favourites" />
+    <NavigationProperty Name="MembershipRegistrations" Relationship="Self.FK__Membershi__Custo__33D4B598" FromRole="Customers" ToRole="MembershipRegistrations" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Customer__5629CD9C" FromRole="Customers" ToRole="Orders" />
+    <NavigationProperty Name="Payouts" Relationship="Self.FK__Payouts__Custome__6D0D32F4" FromRole="Customers" ToRole="Payouts" />
+  </EntityType>
+  <EntityType Name="Favourite">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="ItemId" Type="Int32" Nullable="false" />
+    <Property Name="ItemType" Type="Byte" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Favourite__Custo__71D1E811" FromRole="Favourites" ToRole="Customers" />
+  </EntityType>
+  <EntityType Name="Feedback">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StaffId" Type="Int32" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IsRead" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <NavigationProperty Name="Staff" Relationship="Self.FK__Feedbacks__Delet__398D8EEE" FromRole="Feedbacks" ToRole="Staffs" />
+    <NavigationProperty Name="Staff1" Relationship="Self.FK__Feedbacks__Staff__37A5467C" FromRole="Feedbacks" ToRole="Staffs" />
+  </EntityType>
+  <EntityType Name="Flavor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="UserType" Type="Byte" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Images" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PreparationTime" Type="Int32" />
+    <Property Name="TotalTime" Type="Int32" />
+    <Property Name="Ingredients" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Recipe" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IsApproved" Type="Boolean" Nullable="false" />
+    <Property Name="Slug" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <NavigationProperty Name="Staff" Relationship="Self.FK__Flavors__Deleted__693CA210" FromRole="Flavors" ToRole="Staffs" />
+    <NavigationProperty Name="Payouts" Relationship="Self.FK__Payouts__FlavorI__6C190EBB" FromRole="Flavors" ToRole="Payouts" />
+  </EntityType>
+  <EntityType Name="InputDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InputId" Type="Int32" Nullable="false" />
+    <Property Name="BookId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Book" Relationship="Self.FK__InputDeta__BookI__5070F446" FromRole="InputDetails" ToRole="Books" />
+    <NavigationProperty Name="Input" Relationship="Self.FK__InputDeta__Input__4F7CD00D" FromRole="InputDetails" ToRole="Inputs" />
+  </EntityType>
+  <EntityType Name="Input">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SupplierId" Type="Int32" Nullable="false" />
+    <Property Name="StaffId" Type="Int32" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ImportedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="InputDetails" Relationship="Self.FK__InputDeta__Input__4F7CD00D" FromRole="Inputs" ToRole="InputDetails" />
+    <NavigationProperty Name="Staff" Relationship="Self.FK__Inputs__StaffId__4CA06362" FromRole="Inputs" ToRole="Staffs" />
+    <NavigationProperty Name="Supplier" Relationship="Self.FK__Inputs__Supplier__4BAC3F29" FromRole="Inputs" ToRole="Suppliers" />
+  </EntityType>
+  <EntityType Name="Level">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Key" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Staffs" Relationship="Self.FK__Staffs__LevelId__267ABA7A" FromRole="Levels" ToRole="Staffs" />
+    <NavigationProperty Name="Permissions" Relationship="Self.LevelPermission" FromRole="Levels" ToRole="Permissions" />
+  </EntityType>
+  <EntityType Name="Media">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StaffId" Type="Int32" Nullable="false" />
+    <Property Name="Url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <NavigationProperty Name="Staff" Relationship="Self.FK__Medias__DeletedB__75A278F5" FromRole="Medias" ToRole="Staffs" />
+    <NavigationProperty Name="Staff1" Relationship="Self.FK__Medias__StaffId__74AE54BC" FromRole="Medias" ToRole="Staffs" />
+  </EntityType>
+  <EntityType Name="MembershipRegistration">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="PaymentSum" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="MembershipType" Type="Byte" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Membershi__Custo__33D4B598" FromRole="MembershipRegistrations" ToRole="Customers" />
+  </EntityType>
+  <EntityType Name="OrderDetail">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="BookId" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" Nullable="false" />
+    <Property Name="Price" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="Discount" Type="Double" Nullable="false" />
+    <Property Name="InputMoney" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="InputInformation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Book" Relationship="Self.FK__OrderDeta__BookI__5EBF139D" FromRole="OrderDetails" ToRole="Books" />
+    <NavigationProperty Name="Order" Relationship="Self.FK__OrderDeta__Order__5DCAEF64" FromRole="OrderDetails" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="StaffId" Type="Int32" Nullable="false" />
+    <Property Name="Code" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ShippingFee" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="Tax" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Status" Type="Byte" Nullable="false" />
+    <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="ArrivalDate" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="PaymentSum" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Orders__Customer__5629CD9C" FromRole="Orders" ToRole="Customers" />
+    <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Order__5DCAEF64" FromRole="Orders" ToRole="OrderDetails" />
+    <NavigationProperty Name="Staff" Relationship="Self.FK__Orders__StaffId__571DF1D5" FromRole="Orders" ToRole="Staffs" />
+  </EntityType>
+  <EntityType Name="Payout">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FlavorId" Type="Int32" Nullable="false" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="StaffId" Type="Int32" Nullable="false" />
+    <Property Name="SumTotal" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="Message" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Payouts__Custome__6D0D32F4" FromRole="Payouts" ToRole="Customers" />
+    <NavigationProperty Name="Flavor" Relationship="Self.FK__Payouts__FlavorI__6C190EBB" FromRole="Payouts" ToRole="Flavors" />
+    <NavigationProperty Name="Staff" Relationship="Self.FK__Payouts__StaffId__6E01572D" FromRole="Payouts" ToRole="Staffs" />
+  </EntityType>
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Key" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Levels" Relationship="Self.LevelPermission" FromRole="Permissions" ToRole="Levels" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LevelId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Avatar" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ResetPasswordToken" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
+    <Property Name="TokenExpiredAt" Type="DateTime" Precision="3" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="BookCategories" Relationship="Self.FK__BookCateg__Delet__3C69FB99" FromRole="Staffs" ToRole="BookCategories" />
+    <NavigationProperty Name="Books" Relationship="Self.FK__Books__DeletedBy__44FF419A" FromRole="Staffs" ToRole="Books" />
+    <NavigationProperty Name="Books1" Relationship="Self.FK__Books__StaffId__403A8C7D" FromRole="Staffs" ToRole="Books" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__Customers__Delet__30F848ED" FromRole="Staffs" ToRole="Customers" />
+    <NavigationProperty Name="Feedbacks" Relationship="Self.FK__Feedbacks__Delet__398D8EEE" FromRole="Staffs" ToRole="Feedbacks" />
+    <NavigationProperty Name="Feedbacks1" Relationship="Self.FK__Feedbacks__Staff__37A5467C" FromRole="Staffs" ToRole="Feedbacks" />
+    <NavigationProperty Name="Flavors" Relationship="Self.FK__Flavors__Deleted__693CA210" FromRole="Staffs" ToRole="Flavors" />
+    <NavigationProperty Name="Inputs" Relationship="Self.FK__Inputs__StaffId__4CA06362" FromRole="Staffs" ToRole="Inputs" />
+    <NavigationProperty Name="Level" Relationship="Self.FK__Staffs__LevelId__267ABA7A" FromRole="Staffs" ToRole="Levels" />
+    <NavigationProperty Name="Medias" Relationship="Self.FK__Medias__DeletedB__75A278F5" FromRole="Staffs" ToRole="Medias" />
+    <NavigationProperty Name="Medias1" Relationship="Self.FK__Medias__StaffId__74AE54BC" FromRole="Staffs" ToRole="Medias" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__StaffId__571DF1D5" FromRole="Staffs" ToRole="Orders" />
+    <NavigationProperty Name="Payouts" Relationship="Self.FK__Payouts__StaffId__6E01572D" FromRole="Staffs" ToRole="Payouts" />
+    <NavigationProperty Name="Suppliers" Relationship="Self.FK__Suppliers__Delet__47DBAE45" FromRole="Staffs" ToRole="Suppliers" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Phone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ContactName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContactPhone" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="UpdatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="DeletedAt" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <NavigationProperty Name="Inputs" Relationship="Self.FK__Inputs__Supplier__4BAC3F29" FromRole="Suppliers" ToRole="Inputs" />
+    <NavigationProperty Name="Staff" Relationship="Self.FK__Suppliers__Delet__47DBAE45" FromRole="Suppliers" ToRole="Staffs" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK__BookCateg__Delet__3C69FB99">
+    <End Role="Staffs" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="BookCategories" Type="Self.BookCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staffs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BookCategories">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Books__CategoryI__3F466844">
+    <End Role="BookCategories" Type="Self.BookCategory" Multiplicity="1" />
+    <End Role="Books" Type="Self.Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BookCategories">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Books">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Books__DeletedBy__44FF419A">
+    <End Role="Staffs" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="Books" Type="Self.Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staffs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Books">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Books__StaffId__403A8C7D">
+    <End Role="Staffs" Type="Self.Staff" Multiplicity="1" />
+    <End Role="Books" Type="Self.Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staffs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Books">
+        <PropertyRef Name="StaffId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__InputDeta__BookI__5070F446">
+    <End Role="Books" Type="Self.Book" Multiplicity="1" />
+    <End Role="InputDetails" Type="Self.InputDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Books">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InputDetails">
+        <PropertyRef Name="BookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderDeta__BookI__5EBF139D">
+    <End Role="Books" Type="Self.Book" Multiplicity="1" />
+    <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Books">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="BookId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Delet__30F848ED">
+    <End Role="Staffs" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staffs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Favourite__Custo__71D1E811">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Favourites" Type="Self.Favourite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Favourites">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Membershi__Custo__33D4B598">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+    <End Role="MembershipRegistrations" Type="Self.MembershipRegistration" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="MembershipRegistrations">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__Customer__5629CD9C">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Payouts__Custome__6D0D32F4">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Payouts" Type="Self.Payout" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Payouts">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Feedbacks__Delet__398D8EEE">
+    <End Role="Staffs" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="Feedbacks" Type="Self.Feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staffs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Feedbacks">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Feedbacks__Staff__37A5467C">
+    <End Role="Staffs" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="Feedbacks" Type="Self.Feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staffs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Feedbacks">
+        <PropertyRef Name="StaffId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Flavors__Deleted__693CA210">
+    <End Role="Staffs" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="Flavors" Type="Self.Flavor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staffs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Flavors">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Payouts__FlavorI__6C190EBB">
+    <End Role="Flavors" Type="Self.Flavor" Multiplicity="1" />
+    <End Role="Payouts" Type="Self.Payout" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Flavors">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Payouts">
+        <PropertyRef Name="FlavorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__InputDeta__Input__4F7CD00D">
+    <End Role="Inputs" Type="Self.Input" Multiplicity="1" />
+    <End Role="InputDetails" Type="Self.InputDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Inputs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="InputDetails">
+        <PropertyRef Name="InputId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Inputs__StaffId__4CA06362">
+    <End Role="Staffs" Type="Self.Staff" Multiplicity="1" />
+    <End Role="Inputs" Type="Self.Input" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staffs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Inputs">
+        <PropertyRef Name="StaffId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Inputs__Supplier__4BAC3F29">
+    <End Role="Suppliers" Type="Self.Supplier" Multiplicity="1" />
+    <End Role="Inputs" Type="Self.Input" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Suppliers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Inputs">
+        <PropertyRef Name="SupplierId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Staffs__LevelId__267ABA7A">
+    <End Role="Levels" Type="Self.Level" Multiplicity="1" />
+    <End Role="Staffs" Type="Self.Staff" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Levels">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Staffs">
+        <PropertyRef Name="LevelId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Medias__DeletedB__75A278F5">
+    <End Role="Staffs" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="Medias" Type="Self.Media" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staffs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Medias">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Medias__StaffId__74AE54BC">
+    <End Role="Staffs" Type="Self.Staff" Multiplicity="1" />
+    <End Role="Medias" Type="Self.Media" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staffs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Medias">
+        <PropertyRef Name="StaffId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OrderDeta__Order__5DCAEF64">
+    <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+    <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__StaffId__571DF1D5">
+    <End Role="Staffs" Type="Self.Staff" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staffs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="StaffId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Payouts__StaffId__6E01572D">
+    <End Role="Staffs" Type="Self.Staff" Multiplicity="1" />
+    <End Role="Payouts" Type="Self.Payout" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staffs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Payouts">
+        <PropertyRef Name="StaffId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Suppliers__Delet__47DBAE45">
+    <End Role="Staffs" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="Suppliers" Type="Self.Supplier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staffs">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Suppliers">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LevelPermission">
+    <End Role="Levels" Type="Self.Level" Multiplicity="*" />
+    <End Role="Permissions" Type="Self.Permission" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="IceCreamEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BookCategories" EntityType="Self.BookCategory" />
+    <EntitySet Name="Books" EntityType="Self.Book" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Favourites" EntityType="Self.Favourite" />
+    <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
+    <EntitySet Name="Flavors" EntityType="Self.Flavor" />
+    <EntitySet Name="InputDetails" EntityType="Self.InputDetail" />
+    <EntitySet Name="Inputs" EntityType="Self.Input" />
+    <EntitySet Name="Levels" EntityType="Self.Level" />
+    <EntitySet Name="Medias" EntityType="Self.Media" />
+    <EntitySet Name="MembershipRegistrations" EntityType="Self.MembershipRegistration" />
+    <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="Payouts" EntityType="Self.Payout" />
+    <EntitySet Name="Permissions" EntityType="Self.Permission" />
+    <EntitySet Name="Staffs" EntityType="Self.Staff" />
+    <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <AssociationSet Name="FK__BookCateg__Delet__3C69FB99" Association="Self.FK__BookCateg__Delet__3C69FB99">
+      <End Role="Staffs" EntitySet="Staffs" />
+      <End Role="BookCategories" EntitySet="BookCategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Books__CategoryI__3F466844" Association="Self.FK__Books__CategoryI__3F466844">
+      <End Role="BookCategories" EntitySet="BookCategories" />
+      <End Role="Books" EntitySet="Books" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Books__DeletedBy__44FF419A" Association="Self.FK__Books__DeletedBy__44FF419A">
+      <End Role="Staffs" EntitySet="Staffs" />
+      <End Role="Books" EntitySet="Books" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Books__StaffId__403A8C7D" Association="Self.FK__Books__StaffId__403A8C7D">
+      <End Role="Staffs" EntitySet="Staffs" />
+      <End Role="Books" EntitySet="Books" />
+    </AssociationSet>
+    <AssociationSet Name="FK__InputDeta__BookI__5070F446" Association="Self.FK__InputDeta__BookI__5070F446">
+      <End Role="Books" EntitySet="Books" />
+      <End Role="InputDetails" EntitySet="InputDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__BookI__5EBF139D" Association="Self.FK__OrderDeta__BookI__5EBF139D">
+      <End Role="Books" EntitySet="Books" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Delet__30F848ED" Association="Self.FK__Customers__Delet__30F848ED">
+      <End Role="Staffs" EntitySet="Staffs" />
+      <End Role="Customers" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Favourite__Custo__71D1E811" Association="Self.FK__Favourite__Custo__71D1E811">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Favourites" EntitySet="Favourites" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Membershi__Custo__33D4B598" Association="Self.FK__Membershi__Custo__33D4B598">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="MembershipRegistrations" EntitySet="MembershipRegistrations" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__Customer__5629CD9C" Association="Self.FK__Orders__Customer__5629CD9C">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Payouts__Custome__6D0D32F4" Association="Self.FK__Payouts__Custome__6D0D32F4">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Payouts" EntitySet="Payouts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Feedbacks__Delet__398D8EEE" Association="Self.FK__Feedbacks__Delet__398D8EEE">
+      <End Role="Staffs" EntitySet="Staffs" />
+      <End Role="Feedbacks" EntitySet="Feedbacks" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Feedbacks__Staff__37A5467C" Association="Self.FK__Feedbacks__Staff__37A5467C">
+      <End Role="Staffs" EntitySet="Staffs" />
+      <End Role="Feedbacks" EntitySet="Feedbacks" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Flavors__Deleted__693CA210" Association="Self.FK__Flavors__Deleted__693CA210">
+      <End Role="Staffs" EntitySet="Staffs" />
+      <End Role="Flavors" EntitySet="Flavors" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Payouts__FlavorI__6C190EBB" Association="Self.FK__Payouts__FlavorI__6C190EBB">
+      <End Role="Flavors" EntitySet="Flavors" />
+      <End Role="Payouts" EntitySet="Payouts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__InputDeta__Input__4F7CD00D" Association="Self.FK__InputDeta__Input__4F7CD00D">
+      <End Role="Inputs" EntitySet="Inputs" />
+      <End Role="InputDetails" EntitySet="InputDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Inputs__StaffId__4CA06362" Association="Self.FK__Inputs__StaffId__4CA06362">
+      <End Role="Staffs" EntitySet="Staffs" />
+      <End Role="Inputs" EntitySet="Inputs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Inputs__Supplier__4BAC3F29" Association="Self.FK__Inputs__Supplier__4BAC3F29">
+      <End Role="Suppliers" EntitySet="Suppliers" />
+      <End Role="Inputs" EntitySet="Inputs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Staffs__LevelId__267ABA7A" Association="Self.FK__Staffs__LevelId__267ABA7A">
+      <End Role="Levels" EntitySet="Levels" />
+      <End Role="Staffs" EntitySet="Staffs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Medias__DeletedB__75A278F5" Association="Self.FK__Medias__DeletedB__75A278F5">
+      <End Role="Staffs" EntitySet="Staffs" />
+      <End Role="Medias" EntitySet="Medias" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Medias__StaffId__74AE54BC" Association="Self.FK__Medias__StaffId__74AE54BC">
+      <End Role="Staffs" EntitySet="Staffs" />
+      <End Role="Medias" EntitySet="Medias" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OrderDeta__Order__5DCAEF64" Association="Self.FK__OrderDeta__Order__5DCAEF64">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__StaffId__571DF1D5" Association="Self.FK__Orders__StaffId__571DF1D5">
+      <End Role="Staffs" EntitySet="Staffs" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Payouts__StaffId__6E01572D" Association="Self.FK__Payouts__StaffId__6E01572D">
+      <End Role="Staffs" EntitySet="Staffs" />
+      <End Role="Payouts" EntitySet="Payouts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Suppliers__Delet__47DBAE45" Association="Self.FK__Suppliers__Delet__47DBAE45">
+      <End Role="Staffs" EntitySet="Staffs" />
+      <End Role="Suppliers" EntitySet="Suppliers" />
+    </AssociationSet>
+    <AssociationSet Name="LevelPermission" Association="Self.LevelPermission">
+      <End Role="Levels" EntitySet="Levels" />
+      <End Role="Permissions" EntitySet="Permissions" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

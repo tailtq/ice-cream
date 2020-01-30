@@ -1,0 +1,118 @@
+﻿@model PagedList.IPagedList<App.Models.Staff>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Latest compiled and minified CSS -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Staffs</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="float-left">
+                    <a href="@Url.Action("Create")" class="btn btn-success">Create</a>
+                </div>
+
+                <div class="float-right">
+                    @using (Html.BeginForm("Index", "Staffs", FormMethod.Get))
+                    {
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" value="@ViewBag.search" name="search" class="form-control" placeholder="Search">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" id="btnSearch" type="submit">Go!</button>
+                                </span>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
+                                <thead>
+                                    <tr role="row">
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Position</th>
+                                        <th>Email</th>
+                                        <th>Address</th>
+                                        <th>Phone</th>
+                                        <th>Avatar</th>
+                                        <th>CreateAt</th>
+                                        <th width="10%">Action</th>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int count = 1;
+                                    }
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr role="row" class="odd">
+                                            <td>@(count++)</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Level.Name</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.Address</td>
+                                            <td>@item.Phone</td>
+                                            <td><img src="/@System.Configuration.ConfigurationManager.AppSettings["CusAvatar"]@item.Avatar" width="20" /></td>
+                                            <td>@item.CreatedAt.ToShortDateString()</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a href="/Admin/Staffs/Edit/@item.Id"
+                                                       class="btn btn-xs btn-info btn-edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </a>
+                                                    <a href="/Admin/Staffs/Block/@item.Id"
+                                                       class="btn btn-xs btn-danger btn-delete"
+                                                       onclick="return confirm('Are sure wants to lock?')">
+                                                        <i class="@(item.DeletedAt==null ? "fas fa-unlock-alt" : "fas fa-lock")"></i>
+                                                    </a>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                            <div class="float-right">
+                                @Html.PagedListPager(
+                                    Model,
+                                    page => Url.Action("Index", new { page, search = ViewBag.search }),
+                                    new PagedListRenderOptions()
+                                    {
+                                        FunctionToTransformEachPageLink = (liTag, aTag) =>
+                                        {
+                                            aTag.Attributes.Add("class", "page-link");
+                                            liTag.InnerHtml = aTag.ToString();
+                                            return liTag;
+                                        },
+                                        LiElementClasses = new string[] { "page-item" },
+                                        DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                        DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                        MaximumPageNumbersToDisplay = 5
+                                    }
+                                )
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+<!-- /.col -->

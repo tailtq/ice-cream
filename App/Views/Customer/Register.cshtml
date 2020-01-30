@@ -1,0 +1,78 @@
+﻿@model App.ViewModels.Client.Customer.RegisterViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="breadcrumb-section">
+    <h2 class="sr-only">Site Breadcrumb</h2>
+    <div class="container">
+        <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Home</a></li>
+                    <li class="breadcrumb-item active">Register</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<main class="page-section inner-page-sec-padding-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6 mb--30 mb-lg--0">
+                <!-- Login Form s-->
+                <div class="login-box">
+                    <h4 class="login-title">New Customer</h4>
+                    <p><span class="font-weight-bold">Register</span></p>
+                    <p>
+                        By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the
+                        orders
+                        you have previously made.
+                    </p>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="login-form">
+                        <h4 class="login-title">Register</h4>
+                        <div class="row">
+                            <div class="col-md-12 col-12 mb--15">
+                                <label>Name</label>
+                                @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "mb-0 form-control", @placeholder = "Name" } })
+                                @Html.ValidationMessageFor(m => m.Name)
+                            </div>
+                            <div class="col-md-12 col-12 mb--15">
+                                <label>Email</label>
+                                @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "mb-0 form-control", @placeholder = "Email" } })
+                                @Html.ValidationMessageFor(m => m.Email)
+                            </div>
+                            <div class="col-12 mb--20">
+                                <label>Password</label>
+                                @Html.PasswordFor(m => m.Password, new { @class = "mb-0 form-control", @placeholder = "Password" })
+                                @Html.ValidationMessageFor(m => m.Password)
+                            </div>
+                            <div class="col-12 mb--20">
+                                <label>Address</label>
+                                @Html.EditorFor(m => m.Address, new { htmlAttributes = new { @class = "mb-0 form-control", @placeholder = "Address" } })
+                                @Html.ValidationMessageFor(m => m.Address)
+                            </div>
+                            <div class="col-12 mb--20">
+                                <label>Phone</label>
+                                @Html.EditorFor(m => m.Phone, new { htmlAttributes = new { @class = "mb-0 form-control", @placeholder = "Phone" } })
+                                @Html.ValidationMessageFor(m => m.Phone)
+                            </div>
+                            <div class="col-md-12">
+                                <button class="btn btn-outlined">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</main>
+

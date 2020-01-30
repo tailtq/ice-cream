@@ -1,0 +1,79 @@
+﻿<!-- Sidebar Menu -->
+<nav class="mt-2">
+    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <!-- Add icons to the links using the .nav-icon class
+    with font-awesome or any other icon font library -->
+        <li class="nav-item">
+            <a href="@Url.Action("Index", "Dashboard")" class="nav-link">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>Dashboard</p>
+            </a>
+        </li>
+        <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-book"></i>
+                <p>
+                    Books
+                    <i class="fas fa-angle-left right"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview" style="display: none;">
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Books")" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Books List</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Inputs")" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Inputs</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="@Url.Action("Index", "Suppliers")" class="nav-link">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>Suppliers</p>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a href="@Url.Action("Index", "Orders")" class="nav-link">
+                <i class="nav-icon fas fa-shopping-cart"></i>
+                <p>Orders</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="@Url.Action("Index", "Flavors")" class="nav-link">
+                <i class="nav-icon fas fa-ice-cream"></i>
+                <p>Flavors</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="@Url.Action("Index", "Customers")" class="nav-link">
+                <i class="nav-icon fas fa-users"></i>
+                <p>Customers</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="@Url.Action("Index", "Staffs")" class="nav-link">
+                <i class="nav-icon fas fa-user-tie"></i>
+                <p>Staffs</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="@Url.Action("Index", "Levels")" class="nav-link">
+                <i class="nav-icon fas fa-level-up-alt"></i>
+                <p>Levels</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="@Url.Action("Logout", "Staffs")" class="nav-link">
+                <i class="nav-icon fas fa-sign-out-alt"></i>
+                <p>Logout</p>
+            </a>
+        </li>
+    </ul>
+</nav>
+<!-- /.sidebar-menu -->

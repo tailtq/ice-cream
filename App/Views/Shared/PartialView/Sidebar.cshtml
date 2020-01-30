@@ -1,0 +1,18 @@
+﻿<div class="myaccount-tab-menu nav" role="tablist">
+    <a href="@Url.Action("Orders")"
+       @if (Request.Url.LocalPath == Url.Action("Orders")) { <text> class="active" </text> }><i class="fa fa-cart-arrow-down"></i>Orders</a>
+
+    <a href="@Url.Action("Membership")"
+       @if (Request.Url.LocalPath == Url.Action("Membership")) { <text> class="active" </text> }><i class="fa fa-user-plus"></i>Membership Registration</a>
+
+    <a href="@Url.Action("Detail")"
+       @if (Request.Url.LocalPath == Url.Action("Detail")) { <text> class="active" </text> }><i class="fa fa-user"></i>Account Details</a>
+
+    <a href="@Url.Action("ChangePassword")"
+       @if (Request.Url.LocalPath == Url.Action("ChangePassword")) { <text> class="active" </text> }><i class="fa fa-lock"></i>Change Password</a>
+
+    <a href="@Url.Action("Flavors")"
+       @if (Request.Url.LocalPath == Url.Action("Flavors")) { <text> class="active" </text> }><i class="fas fa-ice-cream"></i>Flavors</a>
+
+    <a href="@Url.Action("Logout")"><i class="fas fa-sign-out-alt"></i> Logout</a>
+</div>

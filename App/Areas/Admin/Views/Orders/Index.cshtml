@@ -1,0 +1,181 @@
+﻿@model PagedList.IPagedList<App.ViewModels.Admin.Order.OrderViewModel>
+@using PagedList.Mvc;
+@using App.Models;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Latest compiled and minified CSS -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Orders</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                @using (Html.BeginForm("Index", "Orders", FormMethod.Get))
+                {
+                    <div class="col-md-3 col-sm-5 col-xs-12 form-group pull-right">
+                        <div class="input-group">
+                            <input type="text" name="search" value="@ViewBag.search" class="form-control" placeholder="Search for...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" id="btnSearch" type="submit">Go!</button>
+                            </span>
+                        </div>
+                    </div>
+                }
+                <div id="example2_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="example2" class="table table-bordered table-hover" data-module="Orders">
+                                <thead>
+                                    <tr role="row">
+                                        <th width="5%">#</th>
+                                        <th>Code</th>
+                                        <th>Customer Name</th>
+                                        <th>Processed By</th>
+                                        <th width="20%">Status</th>
+                                        <th width="20%">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        int count = 1;
+                                    }
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr role="row" class="odd" data-id="@item.Id">
+                                            <td>@(count++)</td>
+                                            <td>@item.Code</td>
+                                            <td>@item.CustomerName</td>
+                                            <td class="staffName">@item.StaffName</td>
+                                            <td class="status">
+                                                @switch (item.Status)
+                                                {
+                                                    case 1:
+                                                        <text>Processing</text>
+                                                        break;
+                                                    case 2:
+                                                        <text>Delivering</text>
+                                                        break;
+                                                    case 3:
+                                                        <text>Received</text>
+                                                        break;
+                                                    case 4:
+                                                        <text>Canceled</text>
+                                                        break;
+                                                    case 5:
+                                                        <text>Want to cancel</text>
+                                                        break;
+                                                }
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button class="btn btn-xs btn-primary element__show-order"
+                                                            data-element='{
+                                                                "Id": "@item.Id",
+                                                                "Code": "@item.Code",
+                                                                "CustomerName": "@item.CustomerName",
+                                                                "ShippingFee": @item.ShippingFee,
+                                                                "Tax": @item.Tax,
+                                                                "PaymentSum": @item.PaymentSum,
+                                                                "Status": @item.Status,
+                                                                "Message": "@item.Message",
+                                                                "CreatedAt": "@item.CreatedAt.ToShortDateString()",
+                                                                "OrderDetails": @Json.Encode(@item.OrderDetails.Select(q => new
+                                                                         {
+                                                                             BookName = q.Book.Name,
+                                                                             Quantity = q.Quantity,
+                                                                             Price = q.Price,
+                                                                             Discount = q.Discount
+                                                                         }))
+                                                            }'
+                                                            data-toggle="modal" data-target="#showElement">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                            <div class="float-right">
+                                @Html.PagedListPager(
+                                    Model,
+                                    page => Url.Action("Index", new { page, search = ViewBag.search }),
+                                    new PagedListRenderOptions()
+                                    {
+                                        FunctionToTransformEachPageLink = (liTag, aTag) =>
+                                        {
+                                            aTag.Attributes.Add("class", "page-link");
+                                            liTag.InnerHtml = aTag.ToString();
+                                            return liTag;
+                                        },
+                                        LiElementClasses = new string[] { "page-item" },
+                                        DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                                        DisplayLinkToPreviousPage = PagedListDisplayMode.Always,
+                                        DisplayLinkToNextPage = PagedListDisplayMode.Always,
+                                        MaximumPageNumbersToDisplay = 5
+                                    }
+                                )
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+
+<!-- /.col -->
+<!-- The Modal -->
+<div class="modal" id="showElement">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Order Detail</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <form action="/" method="post" class="order__change-status">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="order-detail"></div>
+                    <div class="update-data">
+                        <input type="hidden" name="Id" />
+
+                        <div class="form-group text-right">
+                            <label>Status</label>
+                            <select class="form-control" name="Status">
+                                <option value="1">Processing</option>
+                                <option value="2">Delivering</option>
+                                <option value="3">Received</option>
+                                <option value="4">Canceled</option>
+                                <option value="5">Want to cancel</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group text-right order__message hide">
+                            <label>Message</label>
+                            <input type="text" class="form-control" name="Message" required />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

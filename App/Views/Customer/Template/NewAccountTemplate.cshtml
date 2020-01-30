@@ -1,0 +1,18 @@
+﻿@model App.ViewModels.Client.Customer.NewAccountViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <h2>Ice Cream - New Account</h2>
+    <p>Hi @Model.Name, we have just created an account for you to check order status easily. Use this <a href="@Model.LoginUrl">link</a> to login</p>
+    <p>Below is your account information, you shouldn't share this to anyone.</p>
+    <ul>
+        <li>Email: @Model.Email</li>
+        <li>Password: @Model.Password</li>
+    </ul>
+    <p>Don't forget changing to password afterward.</p>
+</body>
+</html>

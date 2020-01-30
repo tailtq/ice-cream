@@ -1,0 +1,195 @@
+﻿@model App.Models.Book
+@using App.Models;
+@{
+    var favourite = (List<App.Models.Favourite>)ViewBag.favourite;
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var price = (double)Model.Price - ((double)(Model.Price) * (Model.Discount) / (100));
+}
+<section class="breadcrumb-section">
+    <h2 class="sr-only">Site Breadcrumb</h2>
+    <div class="container">
+        <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Products")">Books</a></li>
+                    <li class="breadcrumb-item active">@Model.Name</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<main class="inner-page-sec-padding-bottom">
+    <div class="container">
+        <div class="row  mb--60">
+            <div class="col-lg-5 mb--30">
+                <!-- Product Details Slider Big Image-->
+                <div class="product-details-slider sb-slick-slider arrow-type-two">
+                    <div class="single-slide">
+                        <img src="@Model.DecodedImages()[0]" alt="">
+                    </div>
+                </div>
+                <!-- Product Details Slider Nav -->
+            </div>
+            <div class="col-lg-7">
+                <div class="product-details-info pl-lg--30 " style="margin-top: 9px;">
+                    <h3 style="word-wrap: break-word" class="product-title">@Model.Name</h3>
+                    <ul class="list-unstyled">
+                        <li>Sku: <span class="list-value">@Model.Sku</span></li>
+                        <li>Quantity: <span class="list-value">@Model.Quantity</span></li>
+                    </ul>
+                    <div class="price-block">
+                        <span class="price-new">$@(Model.Discount == 0 ? Model.Price.ToString() : String.Format("{0:0.00}", price))</span>
+                        <del @(Model.Discount == 0 ? "hidden" : "") class="price-old">$@Model.Price</del>
+                    </div>
+
+                    <div class="add-to-cart-row">
+                        <div class="count-input-block">
+                            <span class="widget-label">Qty</span>
+                            <input type="number" class="form-control text-center" name="Quantity" value="1" min="1">
+                        </div>
+                        <div class="add-cart-btn">
+                            <button class="btn btn-outlined--primary book__add-to-cart" data-id="@Model.Id">
+                                <span class="plus-icon">+</span>Add to
+                                Cart
+                            </button>
+                        </div>
+                    </div>
+                    <div class="compare-wishlist-row">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (favourite != null)
+                            {
+                                if ((favourite.Where(x => x.ItemId == Model.Id)).FirstOrDefault() != null)
+                                {
+                                    <a href="javascript:void(0)" class="add-link addFavourite favourite_added" data-item-type="@Favourite.BOOKS" data-id="@Model.Id"><i class="fas fa-heart"></i> Favourite</a>
+                                }
+                                else
+                                {
+                                    <a href="javascript:void(0)" class="add-link addFavourite" data-item-type="@Favourite.BOOKS" data-id="@Model.Id"><i class="fas fa-heart"></i> Favourite</a>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sb-custom-tab review-tab section-padding">
+            <ul class="nav nav-tabs nav-style-2" id="myTab2" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="tab1" data-toggle="tab" href="#tab-1" role="tab"
+                       aria-controls="tab-1" aria-selected="true">
+                        DESCRIPTION
+                    </a>
+                </li>
+            </ul>
+            <div class="tab-content space-db--20" id="myTabContent">
+                <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="tab1">
+                    <article class="review-article">
+                        <h1 class="sr-only">Tab Article</h1>
+                        <p style="text-align: center; word-wrap: break-word">
+                            @Model.Description
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="tab-product-details">
+          <div class="brand">
+            <img src="~/Content/Client/img/others/review-tab-product-details.jpg" alt="">
+          </div>
+          <h5 class="meta">Reference <span class="small-text">demo_5</span></h5>
+          <h5 class="meta">In stock <span class="small-text">297 Items</span></h5>
+          <section class="product-features">
+            <h3 class="title">Data sheet</h3>
+            <dl class="data-sheet">
+              <dt class="name">Compositions</dt>
+              <dd class="value">Viscose</dd>
+              <dt class="name">Styles</dt>
+              <dd class="value">Casual</dd>
+              <dt class="name">Properties</dt>
+              <dd class="value">Maxi Dress</dd>
+            </dl>
+          </section>
+        </div> -->
+    </div>
+    <!--=================================
+        RELATED PRODUCTS BOOKS
+    ===================================== -->
+    <section class="">
+        <div class="container">
+            <div class="section-title section-title--bordered">
+                <h2>RELATED PRODUCTS</h2>
+            </div>
+            <div class="product-slider sb-slick-slider slider-border-single-row" data-slick-setting='{
+                "autoplay": true,
+                "autoplaySpeed": 8000,
+                "slidesToShow": 4,
+                "dots":true
+            }' data-slick-responsive='[
+                {"breakpoint":1200, "settings": {"slidesToShow": 4} },
+                {"breakpoint":992, "settings": {"slidesToShow": 3} },
+                {"breakpoint":768, "settings": {"slidesToShow": 2} },
+                {"breakpoint":480, "settings": {"slidesToShow": 1} }
+            ]'>
+                @foreach (var item in @ViewBag.RelatedBook)
+                {
+                    <div class="single-slide">
+                        <div class="product-card">
+                            <div class="product-header">
+                                <a href="/Books/Detail/@item.Slug-@item.Id" class="author">
+                                    @item.BookCategory.Name
+                                </a>
+                                <h3><a href="/Books/Detail/@item.Slug-@item.Id">@item.Name</a></h3>
+                            </div>
+                            <div class="product-card--body">
+                                <div class="card-image">
+                                    <img style="margin-left: 38px;" src="@item.DecodedImages()[0]" alt="">
+                                    <div class="hover-contents">
+                                        <div class="hover-btns">
+                                            <a href="#" class="single-btn book__add-to-cart" data-id="@item.Id">
+                                                <i class="fas fa-shopping-basket"></i>
+                                            </a>
+                                            @if (User.Identity.IsAuthenticated)
+                                            {
+                                                if (favourite != null)
+                                                {
+                                                    if ((favourite.Where(x => x.ItemId == item.Id)).FirstOrDefault() != null)
+                                                    {
+                                                        <a href="javascript:void(0)" class="single-btn addFavourite favourite_added" data-item-type="@Favourite.BOOKS" data-id="@item.Id">
+                                                            <i class="fas fa-heart"></i>
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="javascript:void(0)" class="single-btn addFavourite" data-item-type="@Favourite.BOOKS" data-id="@item.Id">
+                                                            <i class="fas fa-heart"></i>
+                                                        </a>
+                                                    }
+                                                }
+                                            }
+                                            <a href="/Books/Detail/@item.Id"
+                                               class="single-btn">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="price-block">
+                                    <span class="price">$@(item.Discount == 0 ? item.Price.ToString() : String.Format("{0:0.00}", price))</span>
+                                    <del @(item.Discount == 0 ? "hidden" : "") class="price-old">$@item.Price</del>
+                                    <span @(item.Discount == 0 ? "hidden" : "") class="price-discount">@item.Discount%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</main>

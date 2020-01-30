@@ -1,0 +1,128 @@
+﻿@model App.Models.Order
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="breadcrumb-section">
+    <h2 class="sr-only">Site Breadcrumb</h2>
+    <div class="container">
+        <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Orders", "Customer")">Orders</a></li>
+                    <li class="breadcrumb-item active">Order #@Model.Code</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<main class="cart-page-main-block inner-page-sec-padding-bottom">
+    <div class="cart_area cart-area-padding">
+        <div class="container">
+            <div class="page-section-title">
+                <h1>
+                    Order #@Model.Code
+                    <small style="font-size: 14px">
+                        @switch (Model.Status)
+                        {
+                            case 1:
+                                <text>Processing</text>
+                                break;
+                            case 2:
+                                <text>Delivering</text>
+                                break;
+                            case 3:
+                                <text>Received</text>
+                                break;
+                            case 4:
+                                <text>Canceled</text>
+                                break;
+                            case 5:
+                                <text>Want to cancel</text>
+                                break;
+                        }
+                    </small>
+                </h1>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <!-- Cart Table -->
+                    <div class="cart-table table-responsive mb--40">
+                        <table class="table">
+                            <!-- Head Row -->
+                            <thead>
+                                <tr>
+                                    <th class="pro-thumbnail">Image</th>
+                                    <th class="pro-title">Book name</th>
+                                    <th class="pro-price">Price</th>
+                                    <th class="pro-quantity">Quantity</th>
+                                    <th class="pro-subtotal">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.OrderDetails.Count > 0)
+                                {
+                                    foreach (var item in Model.OrderDetails)
+                                    {
+                                        <tr data-id="@item.Id">
+                                            <td class="pro-thumbnail">
+                                                <a href="@Url.Action("Detail", "Books", new { metatitle = item.Book.Slug, id = item.Book.Id })">
+                                                    <img src="@item.Book.DecodedImages()[0]" alt="@item.Book.Name">
+                                                </a>
+                                            </td>
+                                            <td class="pro-title">
+                                                <a href="@Url.Action("Detail", "Books", new { metatitle = item.Book.Slug, id = item.Id })">
+                                                    @item.Book.Name
+                                                </a>
+                                            </td>
+                                            <td class="pro-price">
+                                                $@item.GetPriceAfterDiscount()
+                                                <del style="margin-left: 5px; color: #bd0018"><small>$@item.Price</small></del>
+                                            </td>
+                                            <td class="pro-quantity">
+                                                <div class="pro-qty">
+                                                    <div class="count-input-block">
+                                                        @item.Quantity
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="pro-subtotal">
+                                                $@String.Format("{0:0.00}", item.GetPriceAfterDiscount() * item.Quantity)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cart-section-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12 mb--30 mb-lg--0"></div>
+                <!-- Cart Summary -->
+                <div class="col-lg-6 col-12 d-flex">
+                    <div class="cart-summary">
+                        <div class="cart-summary-wrap">
+                            <h4><span>Cart Summary</span></h4>
+                            <p>Sub Total <span class="text-primary">$@(Model.PaymentSum - Model.ShippingFee)</span></p>
+                            <p>Shipping Fee <span class="text-primary">$@Model.ShippingFee</span></p>
+                            <h2>
+                                Total
+                                <span class="text-primary" id="cartTotal">
+                                    $@String.Format("{0:0.00}", Model.PaymentSum)
+                                </span>
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

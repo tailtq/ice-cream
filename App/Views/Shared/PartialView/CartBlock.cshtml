@@ -1,0 +1,49 @@
+﻿@model App.ViewModels.Client.Cart.CartViewModel
+
+<div class="cart-block">
+    <div class="cart-total">
+        <span class="text-number" id="cart-quantity">
+            @Model.Quantity
+        </span>
+        <span class="text-item">
+            Shopping Cart
+        </span>
+        <span class="price" id="cart-price">
+            $@String.Format("{0:0.00}", Model.Total)
+            <i class="fas fa-chevron-down"></i>
+        </span>
+    </div>
+    <div class="cart-dropdown-block">
+        <div class="cart-items">
+            @foreach (var item in Model.ListItem)
+            {
+                <div class="single-cart-block" data-id="@item.Id">
+                    <div class="cart-product">
+                        <a href="@Url.Action("Detail", "Books", new { metatitle = item.Slug, id = item.Id })" class="image">
+                            <img src="@item.Image" alt="@item.Name">
+                        </a>
+                        <div class="content">
+                            <h3 class="title">
+                                <a href="@Url.Action("Detail", "Books", new { metatitle = item.Slug, id = item.Id })">
+                                    @item.Name
+                                </a>
+                            </h3>
+                            <p class="price"><span class="qty">@item.Quantity ×</span> $@item.GetPriceAfterDiscount()</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="single-cart-block">
+            <div class="btn-block">
+                <a href="@Url.Action("Index", "Cart")" class="btn">
+                    View Cart <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="@Url.Action("Checkout", "Cart")" class="btn btn--primary">
+                    Check Out <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

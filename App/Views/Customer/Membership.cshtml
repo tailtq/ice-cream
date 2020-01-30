@@ -1,0 +1,198 @@
+﻿@model App.Models.Customer
+@{
+    ViewBag.Title = "Membership";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="breadcrumb-section">
+    <h2 class="sr-only">Site Breadcrumb</h2>
+    <div class="container">
+        <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Membership</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<div class="page-section inner-page-sec-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-12">
+                @{Html.RenderPartial("~/Views/Shared/PartialView/Sidebar.cshtml");}
+            </div>
+            <div class="col-lg-9 col-12">
+                @if (Model.MembershipStatus != 0)
+                {
+                    <h3 class="text-center mt-5">You already registered membership</h3>
+                }
+                else
+                {
+                    <div class="planContainer">
+                        <div class="plan">
+                            <div class="titleContainer">
+                                <div class="title">Monthly</div>
+                                <div class="price">
+                                    <p>$15</p>
+                                </div>
+                            </div>
+                            <div class="infoContainer">
+                                <div class="p desc"><em>Enjoy making new flavors monthly.</em></div>
+                                <button type="button" value="1" class="selectPlan"
+                                        data-toggle="modal" data-target="#myModal">
+                                    Select Plan
+                                </button>
+                            </div>
+                        </div>
+                        <div class="plan">
+                            <div class="titleContainer">
+                                <div class="title">Annually</div>
+                                <div class="price">
+                                    <p>$150</p>
+                                </div>
+                            </div>
+                            <div class="infoContainer">
+                                <div class="p desc"><em>Enjoy making new flavors annually.</em></div>
+                                <button type="button" value="2" class="selectPlan"
+                                        data-toggle="modal" data-target="#myModal">
+                                    Select Plan
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Modal Heading</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-9 mx-auto">
+                        <div class="bg-white rounded-lg shadow-sm p-5">
+                            <!-- Credit card form tabs -->
+                            <ul role="tablist" class="nav bg-light nav-pills rounded-pill nav-fill mb-3">
+                                <li class="nav-item">
+                                    <a data-toggle="pill" href="#nav-tab-card" class="nav-link active rounded-pill">
+                                        <i class="fa fa-credit-card"></i>
+                                        Credit Card
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a data-toggle="pill" href="#nav-tab-paypal" class="nav-link rounded-pill">
+                                        <i class="fas fa-paypal"></i>
+                                        Paypal
+                                    </a>
+                                </li>
+                            </ul>
+                            <!-- End -->
+                            <!-- Credit card form content -->
+                            <div class="tab-content">
+                                <!-- credit card info-->
+                                <div id="nav-tab-card" class="tab-pane fade show active">
+                                    @using (Html.BeginForm())
+                                    {
+                                        <input type="hidden" name="MembershipType" />
+                                        <input type="hidden" name="PaymentMethod" value="credit_card" />
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="username">First name (on the card)</label>
+                                                <input type="text" name="CreditCard[first_name]"
+                                                       placeholder="Jason" required class="form-control">
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label for="username">Last name (on the card)</label>
+                                                <input type="text" name="CreditCard[last_name]"
+                                                       placeholder="Doe" required class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="cardNumber">Card number</label>
+                                            <div class="input-group">
+                                                <input type="text" name="CreditCard[number]" placeholder="Your card number"
+                                                       class="form-control" value="4532216992026816" required>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text text-muted">
+                                                        <i class="fa fa-cc-visa mx-1"></i>
+                                                        <i class="fa fa-cc-amex mx-1"></i>
+                                                        <i class="fa fa-cc-mastercard mx-1"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <div class="form-group">
+                                                    <label><span class="hidden-xs">Expiration</span></label>
+                                                    <div class="input-group">
+                                                        <input type="number" placeholder="MM" name="CreditCard[expire_month]"
+                                                               value="11" class="form-control" required>
+                                                        <input type="number" placeholder="YY" name="CreditCard[expire_year]"
+                                                               value="2022" class="form-control" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group mb-4">
+                                                    <label data-toggle="tooltip" title="Three-digits code on the back of your card">
+                                                        CVV
+                                                        <i class="fa fa-question-circle"></i>
+                                                    </label>
+                                                    <input type="text" name="CreditCard[cvv2]" required class="form-control" value="874">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="subscribe btn btn-primary btn-block rounded-pill shadow-sm">
+                                            Confirm
+                                        </button>
+                                    }
+                                </div>
+                                <!-- End -->
+                                <!-- Paypal info -->
+                                <div id="nav-tab-paypal" class="tab-pane fade">
+                                    <p>Paypal is easiest way to pay online</p>
+                                    @using (Html.BeginForm())
+                                    {
+                                        <input type="hidden" name="MembershipType" />
+                                        <input type="hidden" name="PaymentMethod" value="paypal" />
+                                        <button class="btn btn-primary w-100">Confirm</button>
+                                    }
+                                </div>
+                                <!-- End -->
+                            </div>
+                            <!-- End -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('.selectPlan').on('click', function () {
+            $('[name="MembershipType"]').val($(this).attr('value'));
+        });
+    </script>
+}

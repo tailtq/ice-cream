@@ -1,0 +1,25 @@
+﻿@model App.Models.Order
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    @if (Model.Status == App.Models.Order.RECEIVED)
+    {
+        <h2>Ice Cream - Order <b>@Model.Code</b> are received</h2>
+        <p>Thanks you for using our system</p>
+    }
+    else if (Model.Status == App.Models.Order.DELIVERING)
+    {
+        <h2>Ice Cream -  Order <b>@Model.Code</b> are being delivered</h2>
+        <p>It will be delivered in a few days</p>
+    }
+    else if (Model.Status == App.Models.Order.CANCELED)
+    {
+        <h2>Ice Cream -  Order <b>@Model.Code</b> has been canceled</h2>
+        <p>@Model.Message</p>
+    }
+</body>
+</html>

@@ -1,0 +1,122 @@
+﻿@model App.ViewModels.Client.Flavor.FlavorViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="breadcrumb-section">
+    <h2 class="sr-only">Site Breadcrumb</h2>
+    <div class="container">
+        <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Flavors", "Customer")">Flavors Management</a></li>
+                    <li class="breadcrumb-item active">Create</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<div class="page-section inner-page-sec-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <!-- My Account Tab Menu Start -->
+                    <div class="col-lg-3 col-12">
+                        @{Html.RenderPartial("~/Views/Shared/PartialView/Sidebar.cshtml");}
+                    </div>
+                    <!-- My Account Tab Menu End -->
+                    <!-- My Account Tab Content Start -->
+                    <div class="col-lg-9 col-12 mt--30 mt-lg--0">
+                        <div class="tab-content" id="myaccountContent">
+                            <!-- Single Tab Content Start -->
+                            <!-- Single Tab Content Start -->
+                            <div class="tab-pane active" id="account-info" role="tabpanel">
+                                <div class="myaccount-content">
+                                    <h3>Create Flavor</h3>
+                                    <div class="account-details-form">
+                                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+
+                                            <div class="card-body">
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5">Image</label>
+                                                    <div class="col-md-10">
+                                                        <input type="file" name="avatarFile" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5">Preparation Time</label>
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.PreparationTime, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.PreparationTime, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-5">Total Time</label>
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.TotalTime, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.TotalTime, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Ingredients, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                    <div class="col-md-10">
+                                                        @Html.EditorFor(model => model.Ingredients, new { htmlAttributes = new { @class = "form-control" } })
+                                                        @Html.ValidationMessageFor(model => model.Ingredients, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.Recipe, htmlAttributes: new { @class = "control-label col-md-5" })
+                                                    <div class="col-md-10">
+                                                        @Html.TextAreaFor(model => model.Recipe, 10, 30, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.Recipe, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-md-offset-2 col-md-10">
+                                                        <button type="submit" value="Create" class="btn btn--primary">Submit</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <!-- /.card -->
+                                </div>
+                                <!--/.col (left) -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

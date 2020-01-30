@@ -1,0 +1,139 @@
+﻿@model List<App.Models.Book>
+@using App.Models;
+@{
+    var favourite = (List<App.Models.Favourite>)ViewBag.favourite;
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="breadcrumb-section">
+    <h2 class="sr-only">Site Breadcrumb</h2>
+    <div class="container">
+        <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active">Search</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+<main class="inner-page-sec-padding-bottom">
+    <div class="container">
+        <div class="shop-toolbar mb--30">
+            <div class="row align-items-center">
+                <div class="col-xl-10 col-md-4 col-sm-6  mt--10 mt-sm--0">
+                    <span class="toolbar-status">
+                        Showing 1 to 8 of @ViewBag.totalRecord (@ViewBag.TotalPage Pages)
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="shop-product-wrap list with-pagination row space-db--30 shop-border">
+            @foreach (var item in Model)
+            {
+
+                <div class="col-lg-4 col-sm-6">
+                    <div class="product-card card-style-list">
+                        <div class="product-list-content">
+                            <div class="card-image" style="width:255px;height:255px">
+                                <img src="@item.DecodedImages()[0]" alt="" width="255px" height="255px">
+                            </div>
+                            <div class="product-card--body" style="width: 850px">
+                                <div class="product-header">
+                                    <a href="/Books/Detail/@item.Slug-@item.Id" class="author">
+                                        @item.BookCategory.Name
+                                    </a>
+                                    <h3><a href="/Books/Detail/@item.Slug-@item.Id" tabindex="0" style="word-wrap: break-word">@item.Name</a></h3>
+                                </div>
+                                <article>
+                                    <p>@item.Description</p>
+                                </article>
+                                @{
+                                    var price = (double)item.Price - ((double)(item.Price) * (item.Discount) / (100));
+                                }
+                                <div class="price-block">
+                                    <span class="price">$@(item.Discount == 0 ? item.Price.ToString() : String.Format("{0:0.00}", price))</span>
+                                    <del @(item.Discount == 0 ? "hidden" : "") class="price-old">$@item.Price</del>
+                                    <span @(item.Discount == 0 ? "hidden" : "") class="price-discount">@item.Discount%</span>
+                                </div>
+
+                                <div class="btn-block" style="margin-top: 106px;">
+                                    <a href="#" class="btn btn-outlined book__add-to-cart" data-id="@item.Id">Add To Cart</a>
+                                    @if (User.Identity.IsAuthenticated)
+                                    {
+                                        if (favourite != null)
+                                        {
+
+                                            <a href="#" class="card-link addFavourite
+                                                        @(favourite.Where(x => x.ItemId == item.Id).FirstOrDefault() != null ? "favourite_added" : "")"
+                                               data-item-type="@Favourite.BOOKS" data-id="@item.Id">
+                                                <i class="fas fa-heart"></i> Favourite
+                                            </a>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+        </div>
+        <!-- Pagination Block -->
+        @if (ViewBag.TotalPage >= 1)
+        {
+            var pageDisplay = (int)ViewBag.MaxPage;
+            int totalPage = (int)ViewBag.TotalPage;
+            int currentPage = ((int)ViewBag.Page);
+
+            // Create numeric links
+            var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+            var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+            var link = "/Search?search=" + @ViewBag.searchKey + "&page=";
+            <div class="row pt--30">
+                <div class="col-md-12">
+                    <div class="pagination-block">
+                        <ul class="pagination-btns flex-center">
+                            @if (currentPage > ViewBag.First)
+                            {
+                                <li><a href="@link@ViewBag.First" class="single-btn prev-btn ">|<i class="zmdi zmdi-chevron-left"></i> </a></li>
+                                <li><a href="@link@ViewBag.Prev" class="single-btn prev-btn "><i class="zmdi zmdi-chevron-left"></i> </a></li>
+
+                            }
+                            @for (int i = startPageIndex; i <= endPageIndex; i++)
+                            {
+                                if (currentPage == i)
+                                {
+
+                                    <li class="active" style="pointer-events: none"><a href="@link@i" title="Trang @i" class="single-btn isDisabled">@i</a></li>
+                                }
+                                else
+                                {
+                                    <li><a href="@link@i" title="Trang @i" class="single-btn">@i</a></li>
+                                }
+                            }
+                            @if (currentPage < totalPage)
+                            {
+                                <li><a href="@link@ViewBag.Next" class="single-btn next-btn"><i class="zmdi zmdi-chevron-right"></i></a></li>
+                                <li><a href="@link@ViewBag.Last" class="single-btn next-btn"><i class="zmdi zmdi-chevron-right"></i>|</a></li>
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <span>There are no products</span>
+        }
+
+        <!-- Modal -->
+
+    </div>
+</main>
+  </div>

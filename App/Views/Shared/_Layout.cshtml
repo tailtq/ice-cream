@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Pustok - Book Store HTML Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Use Minified Plugins Version For Fast Page Load -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" rel="stylesheet" />
+    @Styles.Render("~/Content/Client/css")
+    <link rel="shortcut icon" type="~/Content/Client/img/x-icon" href="~/Content/Client/img/favicon.ico">
+    <style>
+        .field-validation-valid {
+            display: block;
+        }
+
+        .field-validation-error {
+            display: block;
+            color: red !important;
+            margin-top: 0.75rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="site-wrapper" id="top">
+        @Html.Action("Navbar", "BookCategories")
+
+        @RenderBody()
+    </div>
+
+    <!--=================================
+        Footer Area
+    ===================================== -->
+    @{Html.RenderPartial("PartialView/Footer");}
+
+    @Scripts.Render("~/Scripts/Client/js")
+    @RenderSection("Scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $('[name="CaptchaInputText"]').addClass('form-control');
+        });
+    </script>
+</body>
+</html>

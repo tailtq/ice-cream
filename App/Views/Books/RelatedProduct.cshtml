@@ -1,0 +1,66 @@
+﻿@model List<App.Models.Book>
+<!--=================================
+        RELATED PRODUCTS BOOKS
+    ===================================== -->
+<section class="">
+    <div class="container">
+        <div class="section-title section-title--bordered">
+            <h2>RELATED PRODUCTS</h2>
+        </div>
+        <div class="product-slider sb-slick-slider slider-border-single-row" data-slick-setting='{
+                "autoplay": true,
+                "autoplaySpeed": 8000,
+                "slidesToShow": 4,
+                "dots":true
+            }' data-slick-responsive='[
+                {"breakpoint":1200, "settings": {"slidesToShow": 4} },
+                {"breakpoint":992, "settings": {"slidesToShow": 3} },
+                {"breakpoint":768, "settings": {"slidesToShow": 2} },
+                {"breakpoint":480, "settings": {"slidesToShow": 1} }
+            ]'>
+            @foreach (var item in Model)
+            {
+                <div class="single-slide">
+                    <div class="product-card">
+                        <div class="product-header">
+                            <a href="/Books/Detail/@item.Id" class="author">
+                                @item.Name
+                            </a>
+                            <h3><a href="/Books/Detail/@item.Id">Revolutionize Your BOOK With</a></h3>
+                        </div>
+                        <div class="product-card--body">
+                            <div class="card-image">
+                                <img src="@item.Images" alt="">
+                                <div class="hover-contents">
+                                    <a href="/Books/Detail/@item.Id" class="hover-image">
+                                        <img src="@item.Images" alt="">
+                                    </a>
+                                    <div class="hover-btns">
+                                        <a href="cart.html" class="single-btn">
+                                            <i class="fas fa-shopping-basket"></i>
+                                        </a>
+                                        <a href="wishlist.html" class="single-btn">
+                                            <i class="fas fa-heart"></i>
+                                        </a>
+                                        <a href="/Books/Detail/@item.Id"
+                                           class="single-btn">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            @{
+                                var price = (double)item.Price - ((double)(item.Price) * (item.Discount) / (100));
+                            }
+                            <div class="price-block">
+                                <span class="price">$@(item.Discount == 0 ? item.Price.ToString() : String.Format("{0:0.00}", price))</span>
+                                <del @(item.Discount == 0 ? "hidden" : "") class="price-old">$@item.Price</del>
+                                <span @(item.Discount == 0 ? "hidden" : "") class="price-discount">@item.Discount%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

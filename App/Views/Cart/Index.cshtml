@@ -1,0 +1,135 @@
+﻿@model App.ViewModels.Client.Cart.CartViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="breadcrumb-section">
+    <h2 class="sr-only">Site Breadcrumb</h2>
+    <div class="container">
+        <div class="breadcrumb-contents">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Cart")">Cart</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<main class="cart-page-main-block inner-page-sec-padding-bottom">
+    <div class="cart_area cart-area-padding">
+        <div class="container">
+            <div class="page-section-title">
+                <h1>Shopping Cart</h1>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <!-- Cart Table -->
+                    <div class="cart-table table-responsive mb--40">
+                        <table class="table">
+                            <!-- Head Row -->
+                            <thead>
+                                <tr>
+                                    <th class="pro-remove"></th>
+                                    <th class="pro-thumbnail">Image</th>
+                                    <th class="pro-title">Book name</th>
+                                    <th class="pro-price">Price</th>
+                                    <th class="pro-quantity">Quantity</th>
+                                    <th class="pro-quantity">Remain</th>
+                                    <th class="pro-subtotal">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.ListItem.Count > 0)
+                                {
+                                    foreach (var item in Model.ListItem)
+                                    {
+                                        <tr data-id="@item.Id">
+                                            <td class="pro-remove">
+                                                <a href="#" class="cart__item-remove">
+                                                    <i class="far fa-trash-alt"></i>
+                                                </a>
+                                            </td>
+                                            <td class="pro-thumbnail">
+                                                <a href="@Url.Action("Detail", "Books", new { metatitle = item.Slug, id = item.Id })">
+                                                    <img src="@item.Image" alt="@item.Name">
+                                                </a>
+                                            </td>
+                                            <td class="pro-title">
+                                                <a href="@Url.Action("Detail", "Books", new { metatitle = item.Slug, id = item.Id })">
+                                                    @item.Name
+                                                </a>
+                                            </td>
+                                            <td class="pro-price">
+                                                $@item.GetPriceAfterDiscount()
+                                                <del style="margin-left: 5px; color: #bd0018"><small>$@item.Price</small></del>
+                                            </td>
+                                            <td class="pro-quantity">
+                                                <div class="pro-qty">
+                                                    <div class="count-input-block">
+                                                        @Html.EditorFor(k => item.Quantity, new { htmlAttributes = new { @class = "form-control text-center", @min = 1 } })
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="pro-quantity">
+                                                <span class="text-primary">@item.RemainQuantity</span>
+                                            </td>
+                                            <td class="pro-subtotal">
+                                                $@String.Format("{0:0.00}", item.GetPriceAfterDiscount() * item.Quantity)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="7">
+                                            <p> You have no book in Cart!</p>
+                                        </td>
+                                    </tr>
+                                }
+
+                                <!-- Discount Row  -->
+                                <tr>
+                                    <td colspan="7" class="actions">
+                                        <div class="update-block text-right">
+                                            <button class="btn btn-outlined cart__update">Update cart</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="cart-section-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12 mb--30 mb-lg--0"></div>
+                <!-- Cart Summary -->
+                <div class="col-lg-6 col-12 d-flex">
+                    <div class="cart-summary">
+                        <div class="cart-summary-wrap">
+                            <h4><span>Cart Summary</span></h4>
+                            <h2>
+                                Total
+                                <span class="text-primary" id="cartTotal">
+                                    $@String.Format("{0:0.00}", Model.Total)
+                                </span>
+                            </h2>
+                        </div>
+                        <div class="cart-summary-button">
+                            <a href="@Url.Action("Checkout", "Cart")" class="update-btn c-btn btn-outlined">Checkout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!-- Cart Page End -->
